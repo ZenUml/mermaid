@@ -19,7 +19,13 @@
     <h1>Sequence diagram demos</h1>
     <pre class="mermaid">
 		zenuml
-			A.method
+			A.method() {
+        if(x) {
+          B.method() {
+            selfCall() { return X }
+          }
+        }
+      }
 	</pre
     >
 

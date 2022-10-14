@@ -614,77 +614,10 @@ export const draw = function (_text, id, _version, diagObj) {
   const store = new Vuex.Store(VueSequence.Store());
   store.dispatch('updateCode', { code: _text });
   new Vue({
-    el: '#app',
+    el: diagram._groups[0][0].parentNode,
     store,
     render: (h) => h(VueSequence.DiagramFrame),
   });
-
-  // Fetch data from the parsing
-  const actors = diagObj.db.getActors();
-  const actorKeys = diagObj.db.getActorKeys();
-  const messages = diagObj.db.getMessages();
-  const title = diagObj.db.getDiagramTitle();
-
-  const maxMessageWidthPerActor = getMaxMessageWidthPerActor(actors, messages, diagObj);
-  conf.height = calculateActorMargins(actors, maxMessageWidthPerActor);
-
-  svgDraw.insertComputerIcon(diagram);
-  svgDraw.insertDatabaseIcon(diagram);
-  svgDraw.insertClockIcon(diagram);
-
-  drawActors(diagram, actors, actorKeys, 0, conf, messages);
-
-  // The arrow head definition is attached to the svg once
-  svgDraw.insertArrowHead(diagram);
-  svgDraw.insertArrowCrossHead(diagram);
-  svgDraw.insertArrowFilledHead(diagram);
-  svgDraw.insertSequenceNumber(diagram);
-
-  // only draw popups for the top row of actors.
-  const requiredBoxSize = drawActorsPopup(diagram, actors, actorKeys, doc);
-
-  const { bounds: box } = bounds.getBounds();
-
-  // Adjust line height of actor lines now that the height of the diagram is known
-  log.debug('For line height fix Querying: #' + id + ' .actor-line');
-  const actorLines = selectAll('#' + id + ' .actor-line');
-  actorLines.attr('y2', box.stopy);
-
-  // Make sure the height of the diagram supports long menus.
-  let boxHeight = box.stopy - box.starty;
-  if (boxHeight < requiredBoxSize.maxHeight) {
-    boxHeight = requiredBoxSize.maxHeight;
-  }
-
-  let height = boxHeight + 2 * conf.diagramMarginY;
-  if (conf.mirrorActors) {
-    height = height - conf.boxMargin + conf.bottomMarginAdj;
-  }
-
-  // Make sure the width of the diagram supports wide menus.
-  let boxWidth = box.stopx - box.startx;
-  if (boxWidth < requiredBoxSize.maxWidth) {
-    boxWidth = requiredBoxSize.maxWidth;
-  }
-  const width = boxWidth + 2 * conf.diagramMarginX;
-
-  configureSvgSize(diagram, height, width, conf.useMaxWidth);
-
-  const extraVertForTitle = title ? 40 : 0;
-  diagram.attr(
-    'viewBox',
-    box.startx -
-      conf.diagramMarginX +
-      ' -' +
-      (conf.diagramMarginY + extraVertForTitle) +
-      ' ' +
-      width +
-      ' ' +
-      (height + extraVertForTitle)
-  );
-
-  addSVGAccessibilityFields(diagObj.db, diagram, id);
-  log.debug(`models:`, bounds.models);
 };
 
 /**
