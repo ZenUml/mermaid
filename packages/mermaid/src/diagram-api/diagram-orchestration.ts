@@ -226,8 +226,10 @@ export const addDiagrams = () => {
   registerDiagram(
     'sequence',
     {
-      parser: sequenceParser,
-      db: sequenceDb,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      parser: { parser: { parse: () => {} }, parse: () => {} },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      db: { clear: () => {} },
       renderer: sequenceRenderer,
       styles: sequenceStyles,
       init: (cnf) => {

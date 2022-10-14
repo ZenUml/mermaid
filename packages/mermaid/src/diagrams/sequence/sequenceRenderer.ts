@@ -609,6 +609,16 @@ export const draw = function (_text, id, _version, diagObj) {
   const diagram =
     securityLevel === 'sandbox' ? root.select(`[id="${id}"]`) : select(`[id="${id}"]`);
 
+  Vue.use(Vuex);
+  const VueSequence = window['vue-sequence'].VueSequence;
+  const store = new Vuex.Store(VueSequence.Store());
+  store.dispatch('updateCode', { code: _text });
+  new Vue({
+    el: '#app',
+    store,
+    render: (h) => h(VueSequence.DiagramFrame),
+  });
+
   // Fetch data from the parsing
   const actors = diagObj.db.getActors();
   const actorKeys = diagObj.db.getActorKeys();
