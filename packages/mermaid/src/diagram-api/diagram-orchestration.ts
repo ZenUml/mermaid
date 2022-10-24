@@ -70,8 +70,10 @@ import requirementStyles from '../diagrams/requirement/styles';
 // @ts-ignore: TODO Fix ts errors
 import sequenceParser from '../diagrams/sequence/parser/sequenceDiagram';
 import { sequenceDetector } from '../diagrams/sequence/sequenceDetector';
+import { sequenceDetectorV2 } from '../diagrams/sequence/sequenceDetector-V2';
 import sequenceDb from '../diagrams/sequence/sequenceDb';
 import sequenceRenderer from '../diagrams/sequence/sequenceRenderer';
+import sequenceRendererV2 from '../diagrams/sequence/sequenceRenderer-V2';
 import sequenceStyles from '../diagrams/sequence/styles';
 
 // @ts-ignore: TODO Fix ts errors
@@ -245,6 +247,19 @@ export const addDiagrams = () => {
       },
     },
     sequenceDetector
+  );
+  registerDiagram(
+    'sequence-v2',
+    {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      parser: { parser: { parse: () => {} }, parse: () => {} },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      db: { clear: () => {} },
+      renderer: sequenceRendererV2,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      styles: () => {},
+    },
+    sequenceDetectorV2
   );
   registerDiagram(
     'state',
