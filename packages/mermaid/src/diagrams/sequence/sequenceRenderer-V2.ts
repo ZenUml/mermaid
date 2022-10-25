@@ -1,6 +1,9 @@
 // @ts-nocheck TODO: fix file
 import { select } from 'd3';
 import * as configApi from '../../config';
+import { VueSequence } from 'vue-sequence';
+
+const { Vue, Vuex } = VueSequence;
 
 /**
  * Draws a sequenceDiagram in the tag with id: id based on the graph definition in text.
@@ -26,7 +29,6 @@ export const draw = function (_text: string, id: string) {
     securityLevel === 'sandbox' ? root.select(`[id="${id}"]`) : select(`[id="${id}"]`);
 
   Vue.use(Vuex);
-  const VueSequence = window['vue-sequence'].VueSequence;
   const store = new Vuex.Store(VueSequence.Store());
   store.dispatch('updateCode', { code: _text });
   new Vue({

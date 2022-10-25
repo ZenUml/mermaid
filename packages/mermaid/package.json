@@ -72,7 +72,8 @@
     "lodash": "^4.17.21",
     "moment-mini": "^2.24.0",
     "non-layered-tidy-tree-layout": "^2.0.2",
-    "stylis": "^4.1.2"
+    "stylis": "^4.1.2",
+    "vue-sequence": "^1.0.265"
   },
   "devDependencies": {
     "@applitools/eyes-cypress": "^3.25.7",
