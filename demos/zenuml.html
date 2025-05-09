@@ -14,7 +14,9 @@
 			@Starter(Client)
       Adapter.interfaceMethod() {
         translateParameter(parameter)
-
+        if(parameter == null) {
+          throw new Error("parameter is required")
+        }
         result = Implementation.implementationMethod()
 
         translateResult()
